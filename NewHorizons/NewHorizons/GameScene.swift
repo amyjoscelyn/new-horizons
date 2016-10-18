@@ -36,12 +36,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     var satellite = SKSpriteNode(imageNamed: "sat2")
     
+    func fontSizeFromDeviceWidth() -> CGFloat
+    {
+        let width = frame.size.width
+        let fontSize = width * 0.045
+        
+        return fontSize
+    }
+    
     override func didMove(to view: SKView)
     {
         backgroundColor = SKColor.black
         
+        let fontSize = fontSizeFromDeviceWidth()
+        
         //set up scene here
         satellite.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+        satellite.size = CGSize.init(width: satellite.size.height / 2, height: satellite.size.height / 2)
         satellite.physicsBody = SKPhysicsBody(texture: satellite.texture!, size: satellite.frame.size)
         satellite.physicsBody?.isDynamic = false
         satellite.physicsBody?.affectedByGravity = false
@@ -63,54 +74,75 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         satellite.physicsBody?.contactTestBitMask = bitMask.asteroid.rawValue
         satellite.physicsBody?.collisionBitMask = bitMask.frame.rawValue
         
-        missionDurationLabel.fontSize = 30
+        let missionDurationY = frame.size.height - (frame.size.height / 9)
+        let missionLabelsY = frame.size.height - (frame.size.height / 5)
+        let timeLabelsY = frame.size.height - (frame.size.height / 3.5)
+        
+        missionDurationLabel.fontSize = fontSize
         missionDurationLabel.fontName = "Helvetica Neue"
         missionDurationLabel.fontColor = SKColor.red
-        missionDurationLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 45)
+//        missionDurationLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 45)
+        missionDurationLabel.position = CGPoint(x: frame.size.width / 2, y: missionDurationY)
         addChild(missionDurationLabel)
         
-        missionMinuteLabel.fontSize = 30
+        missionMinuteLabel.fontSize = fontSize
         missionMinuteLabel.fontName = "Helvetica Neue"
-        missionMinuteLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: frame.size.height - 85)
+//        missionMinuteLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: frame.size.height - 85)
+        missionMinuteLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: missionLabelsY)
         addChild(missionMinuteLabel)
         
-        missionHourLabel.fontSize = 30
+        missionHourLabel.fontSize = fontSize
         missionHourLabel.fontName = "Helvetica Neue"
-        missionHourLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 85)
+//        missionHourLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 85)
+        missionHourLabel.position = CGPoint(x: frame.size.width / 2, y: missionLabelsY)
         addChild(missionHourLabel)
         
-        missionDayLabel.fontSize = 30
+        missionDayLabel.fontSize = fontSize
         missionDayLabel.fontName = "Helvetica Neue"
-        missionDayLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: frame.size.height - 85)
+//        missionDayLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: frame.size.height - 85)
+        missionDayLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: missionLabelsY)
         addChild(missionDayLabel)
         
-        minuteTimeLabel.fontSize = 30
+        minuteTimeLabel.fontSize = fontSize
         minuteTimeLabel.fontName = "Helvetica Neue"
-        minuteTimeLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: frame.size.height - 120)
+//        minuteTimeLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: frame.size.height - 120)
+        minuteTimeLabel.position = CGPoint(x: frame.size.width / 2 + 150, y: timeLabelsY)
         addChild(minuteTimeLabel)
         
-        hourTimeLabel.fontSize = 30
+        hourTimeLabel.fontSize = fontSize
         hourTimeLabel.fontName = "Helvetica Neue"
-        hourTimeLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 120)
+//        hourTimeLabel.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - 120)
+        hourTimeLabel.position = CGPoint(x: frame.size.width / 2, y: timeLabelsY)
         addChild(hourTimeLabel)
         
-        dayTimeLabel.fontSize = 30
+        dayTimeLabel.fontSize = fontSize
         dayTimeLabel.fontName = "Helvetica Neue"
-        dayTimeLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: frame.size.height - 120)
+//        dayTimeLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: frame.size.height - 120)
+        dayTimeLabel.position = CGPoint(x: frame.size.width / 2 - 150, y: timeLabelsY)
         addChild(dayTimeLabel)
         
-        asteroidsDodgedImage.position = CGPoint(x: frame.size.width / 5.7, y: frame.size.height - 350)
+//        asteroidsDodgedImage.position = CGPoint(x: frame.size.width / 5.7, y: frame.size.height - 350)
+        asteroidsDodgedImage.position = CGPoint(x: frame.size.width / 6, y: frame.size.height * 0.19)
+//        asteroidsDodgedImage.size = CGSize.init(width: asteroidsDodgedImage.size.width / 1.5, height: asteroidsDodgedImage.size.height / 1.5)
+        asteroidsDodgedImage.size = CGSize.init(width: size.width / 3, height: size.width / 8.3)
         addChild(asteroidsDodgedImage)
         
-        asteroidsDodgedLabel.fontSize = 28
+        print("IMAGE WIDTH:::::::\(asteroidsDodgedImage.size.width / 1.5)")
+        print("IMAGE HEIGHT:::::::\(asteroidsDodgedImage.size.height / 1.5)")
+        
+        print("width: \(size.width / 3) |||| height: \(size.height / 3)")
+        
+        asteroidsDodgedLabel.fontSize = fontSize - 2
         asteroidsDodgedLabel.fontName = "Helvetica Neue"
-        asteroidsDodgedLabel.position = CGPoint(x: frame.size.width / 4.7, y: frame.size.height - 400)
+//        asteroidsDodgedLabel.position = CGPoint(x: frame.size.width / 4.7, y: frame.size.height - 400)
+        asteroidsDodgedLabel.position = CGPoint(x: frame.size.width / 4.7, y: frame.size.height * 0.03)
         asteroidsDodgedLabel.zPosition = 1
         addChild(asteroidsDodgedLabel)
         
-        asteroidsDodgedCountLabel.fontSize = 30
+        asteroidsDodgedCountLabel.fontSize = fontSize
         asteroidsDodgedCountLabel.fontName = "Helvetica Neue"
-        asteroidsDodgedCountLabel.position = CGPoint(x: frame.size.width / 15.5, y: frame.size.height - 350)
+//        asteroidsDodgedCountLabel.position = CGPoint(x: frame.size.width / 15.5, y: frame.size.height - 350)
+        asteroidsDodgedCountLabel.position = CGPoint(x: frame.size.width / 15.5, y: frame.size.height * 0.18)
         asteroidsDodgedCountLabel.zPosition = 1
         addChild(asteroidsDodgedCountLabel)
         
@@ -138,7 +170,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func spawnAsteroid()
     {
-        let asteroid = SKSpriteNode(imageNamed: "Asteroid")
+        let asteroid = SKSpriteNode(imageNamed: "Asteroid2")
+        asteroid.size = CGSize.init(width: asteroid.size.height / 2, height: asteroid.size.height / 2)
         asteroid.position = CGPoint(x: frame.size.width * randomNumber(min: 0, max: 1), y: frame.size.height + asteroid.size.height)
 //        asteroid.physicsBody = SKPhysicsBody(circleOfRadius: asteroid.frame.size.width * 0.3)
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.frame.size)
